@@ -1,0 +1,5 @@
+# Built workbook: publish it as a GitHub Release asset instead of committing it
+*.xlsm
+~$*
+__pycache__/
+*.pyc

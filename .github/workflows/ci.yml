@@ -1,0 +1,17 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  vba:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install LibreOffice
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libreoffice-calc
+      - name: VBA sources must be ASCII (the VBA editor imports ANSI, not UTF-8)
+        run: "! grep -nP '[^\\x00-\\x7F]' src/*.bas"
+      - name: Run the VBA engine and compare every frame with the reference port
+        run: python3 tests/run_vba_tests.py
